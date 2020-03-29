@@ -3,6 +3,7 @@ It watches the typed keys and displays them on the screen in a nice way
 
 # How can I use it
 You need QT creator to recompile or just download the latest release from the "Releases" section on Github
+
 You need to make your user part of the "input" group like this:
 ```
 sudo usermod -a -G input $USER
