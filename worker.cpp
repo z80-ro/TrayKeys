@@ -38,16 +38,19 @@ void worker::run() {
                         if (code == 29 || code == 97) {
                             if (e[0].value) special_keys_state |= KCTRL;
                             else special_keys_state &= ~KCTRL;
+                            emit return_special_keys(special_keys_state);
                         } else if (code == 56 || code == 100) {
                             if (e[0].value) special_keys_state |= KALT;
                             else special_keys_state &= ~KALT;
+                            emit return_special_keys(special_keys_state);
                         } else if (code == 42 || code == 54) {
                             if (e[0].value) special_keys_state |= KSHIFT;
                             else special_keys_state &= ~KSHIFT;
+                            emit return_special_keys(special_keys_state);
                         } else {
                             if (!translate(code)) emit return_read(ar[code], e[0].value, special_keys_state);
                         }
-                        qDebug() << "Value: " << e[0].code << ", Key: " << ar[e[0].code] << ", special keys: " << special_keys_state;
+                        //qDebug() << "Value: " << e[0].code << ", Key: " << ar[e[0].code] << ", special keys: " << special_keys_state;
                     }
                 };
             }

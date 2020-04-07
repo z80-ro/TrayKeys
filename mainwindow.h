@@ -9,7 +9,9 @@
 #include <QMessageBox>
 #include <QSystemTrayIcon>
 #include "worker.h"
+#include "worker_mouse.h"
 #include "transparent.h"
+#include "transparent_mouse.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,9 +37,11 @@ public:
     ~MainWindow();
     void set_systray_object(QSystemTrayIcon *sti);
     worker t;
+    workermouse tmouse;
     transparent display;
-    int index_of_active_device;
-    QStringList result, names;
+    transparent_mouse display_mouse;
+    int index_of_active_device, index_of_active_mousedevice;
+    QStringList result, mouseresult, names, mousenames;
 
 };
 

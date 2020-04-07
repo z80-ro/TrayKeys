@@ -1,5 +1,6 @@
 # What it is
-It watches the typed keys and displays them on the screen in a nice way
+It watches the typed keys and displays them on the screen in a nice way.
+Latest update supports mouse as well and displays button presses next to the cursor
 
 # How can I use it
 You need QT creator to recompile or just download the latest release from the "Releases" section on Github

@@ -61,7 +61,11 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
         queue[qi].state_alt = (special_keys_state & KALT) != 0;
         queue[qi].state_shift = (special_keys_state & KSHIFT) != 0;
         queue[qi].width = 70;
-        if (strlen(s) > 2) queue[qi].width = 173;
+        if (strlen(s) > 2) {
+            if (strncmp(s, "LEFT", 4) && strncmp(s, "RIGHT", 5) && strncmp(s, "UP", 2) && strncmp(s, "DOWN", 4)) {
+                queue[qi].width = 173;
+            }
+        }
 
         if ((extra_offset - total_width) > 0) queue[qi].add = add_value;
         else queue[qi].add = 0;
@@ -159,7 +163,7 @@ void transparent::display_special_keys(int pos, QPainter *p, QPen pen, int i) {
     }
 }
 
-void transparent::paintEvent(QPaintEvent *event) {
+void transparent::paintEvent(QPaintEvent* /* event */) {
     QPainter scrp;
     QPen pen;
     QFont font("Arial", 24);
@@ -202,7 +206,10 @@ void transparent::paintEvent(QPaintEvent *event) {
                     } else if (!strncmp(queue[i].s, "DOWN", 4)) {
                         is_arrow = true;
                         p.drawImage(pos, 2, QImage(":/key_down.png"));
-                    } else p.drawImage(pos, 2, QImage(":/keylarge_on_keyboard.png"));
+                    } else {
+                        is_arrow = false;
+                        p.drawImage(pos, 2, QImage(":/keylarge_on_keyboard.png"));
+                    }
 
                     pen.setColor(QColor(230, 230, 230));
                     p.setPen(pen);
@@ -250,18 +257,17 @@ void transparent::mousePressEvent(QMouseEvent *event) {
         start_fading = true;
     } else if (event->button() == Qt::LeftButton) {
         started_to_move_y = event->pos().y();
-        qDebug("Mouse start Y: %d\n", started_to_move_y);
+        //qDebug("Mouse start Y: %d\n", started_to_move_y);
         reposition = true;
     }
 }
 
-void transparent::mouseReleaseEvent(QMouseEvent *event) {
+void transparent::mouseReleaseEvent(QMouseEvent* /* event */) {
     reposition = false;
     started_to_move_y = 0;
 }
 
 void transparent::mouseMoveEvent(QMouseEvent *event) {
-    qint32 tmp;
 
     if (reposition) {
         current_y = event->screenPos().y() - started_to_move_y;

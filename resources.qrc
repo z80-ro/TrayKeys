@@ -9,5 +9,9 @@
         <file>key_left.png</file>
         <file>key_right.png</file>
         <file>key_up.png</file>
+        <file>mouse_back.png</file>
+        <file>wheel_up.png</file>
+        <file>wheel_down.png</file>
+        <file>special_background.png</file>
     </qresource>
 </RCC>
