@@ -12,11 +12,15 @@ sudo usermod -a -G input $USER
 Without this step your user will be unable to open the input device and you will need to run this program as root (not advised). 
 
 # How it looks like
-Here is a short demo of the program in action:
-[![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/youtube_screen.png)](https://www.youtube.com/watch?v=Vk0Fk1ejOzA "Awesome demo")
 
 Here is the program with mouse support
+
 [![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/systray_mouse_demo.png)](https://youtu.be/z-A8CJix8-k "Awesome demo")
+
+
+Here is the old demo of the program in action (no mouse support version):
+
+[![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/youtube_screen.png)](https://www.youtube.com/watch?v=Vk0Fk1ejOzA "Awesome demo")
 
 
 # Can I use it commercially ?
