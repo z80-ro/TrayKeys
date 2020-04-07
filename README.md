@@ -16,7 +16,7 @@ Here is a short demo of the program in action:
 [![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/youtube_screen.png)](https://www.youtube.com/watch?v=Vk0Fk1ejOzA "Awesome demo")
 
 Here is the program with mouse support
-[![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/youtube_screen.png)](https://youtu.be/z-A8CJix8-k "Awesome demo")
+[![TrayKeys Youtube demo](https://raw.githubusercontent.com/z80-ro/TrayKeys/master/docs/systray_mouse_demo.png)](https://youtu.be/z-A8CJix8-k "Awesome demo")
 
 
 # Can I use it commercially ?
