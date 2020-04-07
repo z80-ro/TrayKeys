@@ -33,7 +33,6 @@ void workermouse::run() {
                     //pos1 = QCursor::pos(screen1);
 
                     //qDebug("Position: %d, %d", pos0.x(), pos0.y());
-                    //qDebug("%x, %x, %x", e[0].type, e[0].code, e[0].value);
 
                     if (e[0].type == 1) {
                         // if button was presed
@@ -71,6 +70,9 @@ void workermouse::run() {
                     emit return_read(buttons_state, pos0);
                     buttons_state &= 0b0111;
                     }
+
+                    //qDebug("%x, %x, %x", e[0].type, e[0].code, e[0].value);
+
                 };
             }
         }

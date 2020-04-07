@@ -50,6 +50,10 @@ void MainWindow::quit_application() {
         t.terminate();
         t.wait();
     }
+    if (tmouse.isRunning()) {
+        tmouse.terminate();
+        tmouse.wait();
+    }
     QApplication::quit();
 }
 
