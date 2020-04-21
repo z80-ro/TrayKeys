@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
-    <height>548</height>
+    <width>409</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>301</width>
+      <x>20</x>
+      <y>10</y>
+      <width>371</width>
       <height>151</height>
      </rect>
     </property>
@@ -45,7 +45,7 @@
     <widget class="QPushButton" name="OkButton">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>300</x>
        <y>120</y>
        <width>61</width>
        <height>22</height>
@@ -55,7 +55,58 @@
       <string>Accept the changes and continue using this program</string>
      </property>
      <property name="text">
-      <string>Hide</string>
+      <string>Ok</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>40</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Adaptive scroll</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QSlider" name="scroll_speed">
+     <property name="geometry">
+      <rect>
+       <x>29</x>
+       <y>70</y>
+       <width>301</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>5</number>
+     </property>
+     <property name="value">
+      <number>2</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>29</x>
+       <y>50</y>
+       <width>71</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Scroll speed</string>
      </property>
     </widget>
    </widget>
@@ -74,8 +125,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>810</width>
-     <height>19</height>
+     <width>409</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -118,9 +169,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>scroll_speed</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>scroll_speed_change(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>adaptive_scroll(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>quit_application()</slot>
   <slot>hide_application()</slot>
+  <slot>scroll_speed_change(int)</slot>
+  <slot>adaptive_scroll(bool)</slot>
  </slots>
 </ui>

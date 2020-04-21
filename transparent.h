@@ -41,6 +41,9 @@ class transparent : public QWidget {
     bool start_fading;
     qreal opacity;
 
+    int scroll_speed;
+    bool is_adaptive_speed;
+
     void empty_buffer();
     void display_special_keys(int pos, QPainter *p, QPen pen, int i);
 
@@ -56,6 +59,8 @@ protected:
 
 public:
     explicit transparent(QWidget *parent = nullptr);
+    void change_speed(int);
+    void adaptive_speed(bool);
     //const char *queue[10];
     keypress queue[MAX_QUEUE_ITEMS];
     int qi = 0;

@@ -60,3 +60,15 @@ void MainWindow::quit_application() {
 void MainWindow::hide_application() {
     this->hide();
 }
+
+
+void MainWindow::scroll_speed_change(int value) {
+    //qDebug("Slider value changed to : %d", value);
+    display.change_speed(value);
+
+}
+
+void MainWindow::adaptive_scroll(bool value) {
+    qDebug("Adaptive value : %d", value);
+    display.adaptive_speed(value);
+}

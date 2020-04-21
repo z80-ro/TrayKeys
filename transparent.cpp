@@ -38,14 +38,26 @@ transparent::transparent(QWidget *parent) : QWidget(parent) {
         queue[i].add = 0;
     }
 
+    qi = 0;
+
     add_value = 0;
     extra_offset = 0;
     total_width = 0;
 
-    connect(&tmrfin, SIGNAL(timeout()), this, SLOT(timer_fin_timeout()));
-    tmrfin.setInterval(7);
-    tmrfin.start();
+    scroll_speed = 2;
+    is_adaptive_speed = true;
 
+    connect(&tmrfin, SIGNAL(timeout()), this, SLOT(timer_fin_timeout()));
+    tmrfin.setInterval(10);
+    tmrfin.start();
+}
+
+void transparent::change_speed(int value) {
+    this->scroll_speed = value;
+}
+
+void transparent::adaptive_speed(bool value) {
+    this->is_adaptive_speed = value;
 }
 
 void transparent::return_read(const char *s, quint32 value, quint32 special_keys_state) {
@@ -53,6 +65,12 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
 
     // Handle only the key-presses for the remaining keys
     if (value == 1 && start_capturing) {
+
+        if (qi > 0 && queue[0].width == 0) {
+            for (i=0; i<MAX_QUEUE_ITEMS-1; i++) queue[i] = queue[i+1];
+            qi--;
+        }
+
         if (qi == MAX_QUEUE_ITEMS) {
             for (i=0; i<MAX_QUEUE_ITEMS-1; i++) queue[i] = queue[i+1];
             qi = MAX_QUEUE_ITEMS-1;
@@ -109,6 +127,8 @@ void transparent::empty_buffer() {
 }
 
 void transparent::timer_fin_timeout() {
+    int i, active_items=0, adaptive_increment=0;
+
     if (start_fading) {
         opacity -= 0.01f;
         if (opacity < 0) opacity = 0;
@@ -117,10 +137,16 @@ void transparent::timer_fin_timeout() {
     if (!reposition) {
         if (queue[0].s != nullptr) {
             if (extra_offset - total_width > 0) {
-                add_value += 1;
+                add_value += scroll_speed;
                 //if (add_value > 1000) add_value = 1000;
             }
-            extra_offset += 1;
+            if (this->is_adaptive_speed) {
+                for (i=0; i<MAX_QUEUE_ITEMS-1; i++) if (queue[i].width > 0) active_items++;
+                //adaptive_increment = scroll_speed * ((active_items * 30) / MAX_QUEUE_ITEMS);
+                adaptive_increment = (active_items * 60) / MAX_QUEUE_ITEMS;
+                //qDebug("Active items: %d, adaptive_increment: %d, extra_offset: %d, total_width: %d", active_items, adaptive_increment, extra_offset, total_width);
+            }
+            extra_offset += this->scroll_speed + adaptive_increment;
             if (extra_offset > 20000) extra_offset = 20000;
             if (isHidden()) show();
             update();
@@ -189,47 +215,59 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
         //font.setBold(true);
         for (i=0; i<MAX_QUEUE_ITEMS; i++) {
             if (queue[i].s != nullptr) {
-                pos += queue[i].add;            // adjust the position
-                // only draw it if it's visible
-                if (pos+queue[i].width >= 0) {
-                    if (strlen(queue[i].s) <= 2) {
-                        p.drawImage(pos, 2, QImage(":/key_on_keyboard.png"));
-                    } else if (!strncmp(queue[i].s, "LEFT", 4)) {
-                        is_arrow = true;
-                        p.drawImage(pos, 2, QImage(":/key_left.png"));
-                    } else if (!strncmp(queue[i].s, "RIGHT", 5)) {
-                        is_arrow = true;
-                        p.drawImage(pos, 2, QImage(":/key_right.png"));
-                    } else if (!strncmp(queue[i].s, "UP", 2)) {
-                        is_arrow = true;
-                        p.drawImage(pos, 2, QImage(":/key_up.png"));
-                    } else if (!strncmp(queue[i].s, "DOWN", 4)) {
-                        is_arrow = true;
-                        p.drawImage(pos, 2, QImage(":/key_down.png"));
-                    } else {
-                        is_arrow = false;
-                        p.drawImage(pos, 2, QImage(":/keylarge_on_keyboard.png"));
-                    }
+                if (pos + queue[i].add + queue[i].width < 0) {
+                    if (queue[i].width > 0) {
+                        //qDebug("item %d, add: %d, width: %d, extra_offset: %d, pos: %d", i, queue[i].add, queue[i].width, extra_offset, pos);
+                        extra_offset -= queue[i].add + queue[i].width;
+                        pos += queue[i].add + queue[i].width;
+                        total_width -= queue[i].add + queue[i].width;
 
-                    pen.setColor(QColor(230, 230, 230));
-                    p.setPen(pen);
-                    if (strlen(queue[i].s) == 1) {
-                        p.setFont(font);
-                        p.drawText(pos+16, 32, queue[i].s);
-                    } else {
-                        if (!is_arrow) {
-                            p.setFont(fontmedium);
-                            p.drawText(pos+10, 25, queue[i].s);
+                        queue[i].add = 0;
+                        queue[i].width = 0;
+                    }
+                } else {
+                    pos += queue[i].add;            // adjust the position
+                    // only draw it if it's visible
+                    if (pos+queue[i].width >= 0) {
+                        if (strlen(queue[i].s) <= 2) {
+                            p.drawImage(pos, 2, QImage(":/key_on_keyboard.png"));
+                        } else if (!strncmp(queue[i].s, "LEFT", 4)) {
+                            is_arrow = true;
+                            p.drawImage(pos, 2, QImage(":/key_left.png"));
+                        } else if (!strncmp(queue[i].s, "RIGHT", 5)) {
+                            is_arrow = true;
+                            p.drawImage(pos, 2, QImage(":/key_right.png"));
+                        } else if (!strncmp(queue[i].s, "UP", 2)) {
+                            is_arrow = true;
+                            p.drawImage(pos, 2, QImage(":/key_up.png"));
+                        } else if (!strncmp(queue[i].s, "DOWN", 4)) {
+                            is_arrow = true;
+                            p.drawImage(pos, 2, QImage(":/key_down.png"));
+                        } else {
+                            is_arrow = false;
+                            p.drawImage(pos, 2, QImage(":/keylarge_on_keyboard.png"));
                         }
+
+                        pen.setColor(QColor(230, 230, 230));
+                        p.setPen(pen);
+                        if (strlen(queue[i].s) == 1) {
+                            p.setFont(font);
+                            p.drawText(pos+16, 32, queue[i].s);
+                        } else {
+                            if (!is_arrow) {
+                                p.setFont(fontmedium);
+                                p.drawText(pos+10, 25, queue[i].s);
+                            }
+                        }
+
+                        fontsmall.setBold(true);
+                        p.setFont(fontsmall);
+
+                        display_special_keys(pos, &p, pen, i);
                     }
 
-                    fontsmall.setBold(true);
-                    p.setFont(fontsmall);
-
-                    display_special_keys(pos, &p, pen, i);
+                    pos += queue[i].width;
                 }
-
-                pos += queue[i].width;
             }
         }
         p.end();

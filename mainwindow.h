@@ -31,6 +31,8 @@ private slots:
         void event_triggered(QAction *action);
         void quit_application();
         void hide_application();
+        void scroll_speed_change(int value);
+        void adaptive_scroll(bool value);
 
 public:
     explicit MainWindow(QWidget *parent = 0);
