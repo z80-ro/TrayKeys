@@ -33,8 +33,16 @@ class transparent : public QWidget {
     qint32 extra_offset;
     qint32 add_value;
     qint32 total_width;
+    int on_screen_width;
+    int on_screen_height;
 
+    QFont font;
+    QFont fontmedium;
+    QFont fontsmall;
+
+    int current_x;
     qint32 current_y;
+    qint32 started_to_move_x;
     qint32 started_to_move_y;
     bool reposition;
 
@@ -43,6 +51,12 @@ class transparent : public QWidget {
 
     int scroll_speed;
     bool is_adaptive_speed;
+    int adaptive_speed_factor;
+
+    QPixmap *fb;
+
+    QString height_suffix;
+    int height_radio;
 
     void empty_buffer();
     void display_special_keys(int pos, QPainter *p, QPen pen, int i);
@@ -61,6 +75,11 @@ public:
     explicit transparent(QWidget *parent = nullptr);
     void change_speed(int);
     void adaptive_speed(bool);
+    void set_width(int);
+    void set_pos_x(int);
+    void set_adaptive_factor(int);
+    void set_height_suffix(QString, int);
+
     //const char *queue[10];
     keypress queue[MAX_QUEUE_ITEMS];
     int qi = 0;

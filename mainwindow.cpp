@@ -26,12 +26,12 @@ void MainWindow::event_triggered(QAction *action)
     if (action->text() == "Start capturing") {
         display.start_capturing = true;
         display_mouse.start_capturing = true;
-        systrayicon->setIcon(QIcon(":/icon_active.png"));
+        systrayicon->setIcon(QIcon(":/images/icon_active.png"));
     }
     if (action->text() == "Stop capturing") {
         display.start_capturing = false;
         display_mouse.start_capturing = false;
-        systrayicon->setIcon(QIcon(":/icon_stopped.png"));
+        systrayicon->setIcon(QIcon(":/images/icon_stopped.png"));
     }
     if (action->text().contains("(keyboard)")) {
         qDebug() << "New keyboard device: " << action->text();
@@ -69,6 +69,33 @@ void MainWindow::scroll_speed_change(int value) {
 }
 
 void MainWindow::adaptive_scroll(bool value) {
-    qDebug("Adaptive value : %d", value);
+    //qDebug("Adaptive value : %d", value);
     display.adaptive_speed(value);
+}
+
+void MainWindow::new_width(int w) {
+    display.set_width(w);
+    //qDebug("New width: %d", w);
+}
+
+void MainWindow::new_position(int x) {
+    display.set_pos_x(x);
+    //qDebug("New position: %d", x);
+}
+
+void MainWindow::new_adaptive_factor(int f) {
+    display.set_adaptive_factor(f);
+    //qDebug("New factor: %d", f);
+}
+
+void MainWindow::small_height_clicked(bool v) {
+    display.set_height_suffix("_small", 0);
+}
+
+void MainWindow::medium_height_clicked(bool v) {
+    display.set_height_suffix("_medium", 1);
+}
+
+void MainWindow::large_height_clicked(bool v) {
+    display.set_height_suffix("", 2);
 }

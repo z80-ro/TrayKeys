@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     QString tmpresult;
 
     MainWindow w;
-    icon.addFile(":/icon_active.png");
+    icon.addFile(":/images/icon_active.png");
 
     // Find out what the keyboard devices are
     QString cmd1 = "/bin/sh -c \"grep -B6 120013 /proc/bus/input/devices\"";

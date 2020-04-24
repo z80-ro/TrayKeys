@@ -18,12 +18,21 @@ transparent::transparent(QWidget *parent) : QWidget(parent) {
 
     //setParent(0);
 
-    pmap.load(":/header.png");
+    pmap.load(":/images/header.png");
 
-    this->resize(1920, 92);
+    on_screen_width = 1920;
+    on_screen_height = 92;
+    current_x = 0;
+    height_suffix = "";
+    height_radio = 2;       // by default it's large
+
+    this->resize(on_screen_width, on_screen_height);
     this->setAutoFillBackground(true);
     current_y = 500;
-    this->move(0, current_y);
+    this->move(current_x, current_y);
+
+    // init framebuffer
+    fb = new QPixmap(on_screen_width, on_screen_height);
 
     start_capturing = true;
     reposition = false;
@@ -46,10 +55,46 @@ transparent::transparent(QWidget *parent) : QWidget(parent) {
 
     scroll_speed = 2;
     is_adaptive_speed = true;
+    adaptive_speed_factor = 5;
 
     connect(&tmrfin, SIGNAL(timeout()), this, SLOT(timer_fin_timeout()));
     tmrfin.setInterval(10);
     tmrfin.start();
+}
+
+void transparent::set_height_suffix(QString s, int radio) {
+    height_suffix = s;
+    height_radio = radio;
+    switch(height_radio) {
+    case 0:
+        on_screen_height = 72;
+        break;
+    case 1:
+        on_screen_height = 82;
+        break;
+    case 2:
+        on_screen_height = 92;
+        break;
+    }
+    this->resize(on_screen_width, on_screen_height);
+    if (fb) delete(fb);
+    fb = new QPixmap(on_screen_width, on_screen_height);
+}
+
+void transparent::set_width(int w) {
+    on_screen_width = w;
+    this->resize(on_screen_width, on_screen_height);
+    if (fb) delete(fb);
+    fb = new QPixmap(on_screen_width, on_screen_height);
+}
+
+void transparent::set_adaptive_factor(int f) {
+    adaptive_speed_factor = f;
+}
+
+void transparent::set_pos_x(int x) {
+    current_x = x;
+    this->move(current_x, current_y);
 }
 
 void transparent::change_speed(int value) {
@@ -78,10 +123,30 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
         queue[qi].state_ctrl = (special_keys_state & KCTRL) != 0;
         queue[qi].state_alt = (special_keys_state & KALT) != 0;
         queue[qi].state_shift = (special_keys_state & KSHIFT) != 0;
-        queue[qi].width = 70;
+        switch(height_radio) {
+        case 0:
+            queue[qi].width = 50;
+            break;
+        case 1:
+            queue[qi].width = 60;
+            break;
+        case 2:
+            queue[qi].width = 70;
+            break;
+        }
         if (strlen(s) > 2) {
             if (strncmp(s, "LEFT", 4) && strncmp(s, "RIGHT", 5) && strncmp(s, "UP", 2) && strncmp(s, "DOWN", 4)) {
-                queue[qi].width = 173;
+                switch(height_radio) {
+                case 0:
+                    queue[qi].width = 110;
+                    break;
+                case 1:
+                    queue[qi].width = 142;
+                    break;
+                case 2:
+                    queue[qi].width = 173;
+                    break;
+                }
             }
         }
 
@@ -143,7 +208,7 @@ void transparent::timer_fin_timeout() {
             if (this->is_adaptive_speed) {
                 for (i=0; i<MAX_QUEUE_ITEMS-1; i++) if (queue[i].width > 0) active_items++;
                 //adaptive_increment = scroll_speed * ((active_items * 30) / MAX_QUEUE_ITEMS);
-                adaptive_increment = (active_items * 60) / MAX_QUEUE_ITEMS;
+                adaptive_increment = (active_items * adaptive_speed_factor) / (MAX_QUEUE_ITEMS >> 4);
                 //qDebug("Active items: %d, adaptive_increment: %d, extra_offset: %d, total_width: %d", active_items, adaptive_increment, extra_offset, total_width);
             }
             extra_offset += this->scroll_speed + adaptive_increment;
@@ -158,7 +223,17 @@ void transparent::timer_fin_timeout() {
 void transparent::display_special_keys(int pos, QPainter *p, QPen pen, int i) {
     int posy, rect_height;
 
-    posy = 68;
+    switch(height_radio) {
+    case 0:
+        posy = 48;
+        break;
+    case 1:
+        posy = 58;
+        break;
+    case 2:
+        posy = 68;
+        break;
+    }
     rect_height = 0;
 
     if (queue[i].state_ctrl || queue[i].state_alt || queue[i].state_shift) {
@@ -192,17 +267,26 @@ void transparent::display_special_keys(int pos, QPainter *p, QPen pen, int i) {
 void transparent::paintEvent(QPaintEvent* /* event */) {
     QPainter scrp;
     QPen pen;
-    QFont font("Arial", 24);
-    QFont fontmedium("Arial", 16);
-    QFont fontsmall("Arial", 10);
+
+    QFont fontsmall0("Arial", 7);
+    QFont fontsmall1("Arial", 8);
+    QFont fontsmall2("Arial", 10);
+
+    QFont fontlarge0("Arial", 16);
+    QFont fontlarge1("Arial", 20);
+    QFont fontlarge2("Arial", 24);
+
+    QFont fontmed0("Arial", 8);
+    QFont fontmed1("Arial", 12);
+    QFont fontmed2("Arial", 16);
+
     int pos, i;
     bool is_arrow = false;
 
-    static QPixmap *fb = nullptr;
-    if (!fb) fb = new QPixmap(1920, 92);
     QPainter p;
 
-    pos = 1000-extra_offset;
+    if (on_screen_width > 100) pos = (on_screen_width - 100) - extra_offset;
+    else pos = on_screen_width - extra_offset;
 
     //if (has_changed) {
         fb->fill(Qt::transparent);
@@ -225,44 +309,83 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
                         queue[i].add = 0;
                         queue[i].width = 0;
                     }
+
+                } else if (pos + queue[i].add >= on_screen_width) {
+                    continue;
+
                 } else {
                     pos += queue[i].add;            // adjust the position
                     // only draw it if it's visible
                     if (pos+queue[i].width >= 0) {
                         if (strlen(queue[i].s) <= 2) {
-                            p.drawImage(pos, 2, QImage(":/key_on_keyboard.png"));
+                            p.drawImage(pos, 2, QImage(":/images/key_on_keyboard"+height_suffix+".png"));
                         } else if (!strncmp(queue[i].s, "LEFT", 4)) {
                             is_arrow = true;
-                            p.drawImage(pos, 2, QImage(":/key_left.png"));
+                            p.drawImage(pos, 2, QImage(":/images/key_left"+height_suffix+".png"));
                         } else if (!strncmp(queue[i].s, "RIGHT", 5)) {
                             is_arrow = true;
-                            p.drawImage(pos, 2, QImage(":/key_right.png"));
+                            p.drawImage(pos, 2, QImage(":/images/key_right"+height_suffix+".png"));
                         } else if (!strncmp(queue[i].s, "UP", 2)) {
                             is_arrow = true;
-                            p.drawImage(pos, 2, QImage(":/key_up.png"));
+                            p.drawImage(pos, 2, QImage(":/images/key_up"+height_suffix+".png"));
                         } else if (!strncmp(queue[i].s, "DOWN", 4)) {
                             is_arrow = true;
-                            p.drawImage(pos, 2, QImage(":/key_down.png"));
+                            p.drawImage(pos, 2, QImage(":/images/key_down"+height_suffix+".png"));
                         } else {
                             is_arrow = false;
-                            p.drawImage(pos, 2, QImage(":/keylarge_on_keyboard.png"));
+                            p.drawImage(pos, 2, QImage(":/images/keylarge_on_keyboard"+height_suffix+".png"));
                         }
 
                         pen.setColor(QColor(230, 230, 230));
                         p.setPen(pen);
+                        // If it is one character only
                         if (strlen(queue[i].s) == 1) {
-                            p.setFont(font);
-                            p.drawText(pos+16, 32, queue[i].s);
+                            switch(height_radio) {
+                            case 0:
+                                p.setFont(fontlarge0);
+                                p.drawText(pos+9, 22, queue[i].s);
+                                break;
+                            case 1:
+                                p.setFont(fontlarge1);
+                                p.drawText(pos+12, 28, queue[i].s);
+                                break;
+                            case 2:
+                                p.setFont(fontlarge2);
+                                p.drawText(pos+16, 32, queue[i].s);
+                                break;
+                            }
+                        // if it's multi-character
                         } else {
                             if (!is_arrow) {
-                                p.setFont(fontmedium);
-                                p.drawText(pos+10, 25, queue[i].s);
+                                switch(height_radio) {
+                                case 0:
+                                    p.setFont(fontmed0);
+                                    p.drawText(pos+10, 18, queue[i].s);
+                                    break;
+                                case 1:
+                                    p.setFont(fontmed1);
+                                    p.drawText(pos+10, 21, queue[i].s);
+                                    break;
+                                case 2:
+                                    p.setFont(fontmed2);
+                                    p.drawText(pos+10, 25, queue[i].s);
+                                    break;
+                                }
                             }
                         }
 
                         fontsmall.setBold(true);
-                        p.setFont(fontsmall);
-
+                        switch(height_radio) {
+                        case 0:
+                            p.setFont(fontsmall0);
+                            break;
+                        case 1:
+                            p.setFont(fontsmall1);
+                            break;
+                        case 2:
+                            p.setFont(fontsmall2);
+                            break;
+                        }
                         display_special_keys(pos, &p, pen, i);
                     }
 
@@ -278,8 +401,8 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
     scrp.setOpacity(opacity);
     scrp.setRenderHint(QPainter::Antialiasing);
     //scrp.setOpacity(0.5f);
-    scrp.drawPixmap(0, 0, 1920, 92, pmap);
-    scrp.drawPixmap(0, 0, 1920, 92, *fb);
+    scrp.drawPixmap(0, 0, on_screen_width, on_screen_height, pmap);
+    scrp.drawPixmap(0, 0, on_screen_width, on_screen_height, *fb);
     //scrp.drawPixmap(0, 0, *fb, offset_in_pixmap, 0, fb->width()-offset_in_pixmap, fb->height());
     scrp.end();
 
@@ -295,6 +418,7 @@ void transparent::mousePressEvent(QMouseEvent *event) {
         start_fading = true;
     } else if (event->button() == Qt::LeftButton) {
         started_to_move_y = event->pos().y();
+        started_to_move_x = event->pos().x();
         //qDebug("Mouse start Y: %d\n", started_to_move_y);
         reposition = true;
     }
@@ -303,21 +427,28 @@ void transparent::mousePressEvent(QMouseEvent *event) {
 void transparent::mouseReleaseEvent(QMouseEvent* /* event */) {
     reposition = false;
     started_to_move_y = 0;
+    started_to_move_x = 0;
 }
 
 void transparent::mouseMoveEvent(QMouseEvent *event) {
 
     if (reposition) {
         current_y = event->screenPos().y() - started_to_move_y;
+        current_x = event->screenPos().x() - started_to_move_x;
         //qDebug("relative_y: %d, event_pos: %d", event->y(), event->screenPos().y());
         /*
         tmp = event->pos().y() - started_to_move_y;
         current_y += tmp;
         qDebug("current_y: %d, event_pos: %d, screenposy: %f", current_y, event->pos().y(), event->screenPos().y());
         */
+
         if (current_y < 0) current_y = 0;
-        if (current_y + 92 > QApplication::desktop()->size().height()) current_y = QApplication::desktop()->size().height() - 92;
-        this->move(0, current_y);
+        if (current_y + on_screen_height > QApplication::desktop()->size().height()) current_y = QApplication::desktop()->size().height() - on_screen_height;
+
+        if (current_x < 0) current_x = 0;
+        if (current_x + on_screen_width > QApplication::desktop()->size().width()) current_x = QApplication::desktop()->size().width() - on_screen_width;
+
+        this->move(current_x, current_y);
         //qDebug("current_y: %d, event_pos: %d\n\nf", current_y, event->pos().y());
         update();
     }

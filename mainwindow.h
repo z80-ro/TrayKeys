@@ -33,6 +33,12 @@ private slots:
         void hide_application();
         void scroll_speed_change(int value);
         void adaptive_scroll(bool value);
+        void new_width(int);
+        void new_position(int);
+        void new_adaptive_factor(int);
+        void small_height_clicked(bool);
+        void medium_height_clicked(bool);
+        void large_height_clicked(bool);
 
 public:
     explicit MainWindow(QWidget *parent = 0);

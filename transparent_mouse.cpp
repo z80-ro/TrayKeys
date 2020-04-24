@@ -18,10 +18,10 @@ transparent_mouse::transparent_mouse(QWidget *parent) : QWidget(parent) {
 
     //setParent(0);
 
-    pmap.load(":/mouse_back.png");
-    wheel_up.load(":/wheel_up.png");
-    wheel_down.load(":/wheel_down.png");
-    special_back.load(":/special_background.png");
+    pmap.load(":/images/mouse_back.png");
+    wheel_up.load(":/images/wheel_up.png");
+    wheel_down.load(":/images/wheel_down.png");
+    special_back.load(":/images/special_background.png");
 
     this->resize(50, 61);
     this->setAutoFillBackground(true);

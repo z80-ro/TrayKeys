@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>227</height>
+    <width>407</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,50 +20,18 @@
       <x>20</x>
       <y>10</y>
       <width>371</width>
-      <height>151</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
      <string>Main Actions</string>
     </property>
-    <widget class="QPushButton" name="QuitButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>80</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Quit this application</string>
-     </property>
-     <property name="text">
-      <string>Quit</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="OkButton">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>120</y>
-       <width>61</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Accept the changes and continue using this program</string>
-     </property>
-     <property name="text">
-      <string>Ok</string>
-     </property>
-    </widget>
     <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>40</y>
-       <width>111</width>
+       <x>30</x>
+       <y>90</y>
+       <width>141</width>
        <height>23</height>
       </rect>
      </property>
@@ -77,8 +45,8 @@
     <widget class="QSlider" name="scroll_speed">
      <property name="geometry">
       <rect>
-       <x>29</x>
-       <y>70</y>
+       <x>30</x>
+       <y>50</y>
        <width>301</width>
        <height>16</height>
       </rect>
@@ -99,14 +67,216 @@
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>29</x>
-       <y>50</y>
-       <width>71</width>
+       <x>30</x>
+       <y>30</y>
+       <width>91</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
       <string>Scroll speed</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>110</y>
+       <width>45</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>30</number>
+     </property>
+     <property name="value">
+      <number>5</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>90</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Adaptive factor</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="OkButton">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>370</y>
+      <width>61</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Accept the changes and continue using this program</string>
+    </property>
+    <property name="text">
+     <string>Ok</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="QuitButton">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>370</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Quit this application</string>
+    </property>
+    <property name="text">
+     <string>Quit</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>371</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Position and size</string>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Width</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_width">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>71</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>3840</number>
+     </property>
+     <property name="value">
+      <number>1920</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_width_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>71</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="maximum">
+      <number>3840</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pos X</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>50</y>
+       <width>96</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>small</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_2">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>80</y>
+       <width>96</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>medium</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_3">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>110</y>
+       <width>96</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>large</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>30</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Height</string>
      </property>
     </widget>
    </widget>
@@ -125,7 +295,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>409</width>
+     <width>407</width>
      <height>22</height>
     </rect>
    </property>
@@ -144,8 +314,8 @@
    <slot>quit_application()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>187</y>
+     <x>277</x>
+     <y>430</y>
     </hint>
     <hint type="destinationlabel">
      <x>348</x>
@@ -160,8 +330,8 @@
    <slot>hide_application()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>290</x>
-     <y>185</y>
+     <x>330</x>
+     <y>430</y>
     </hint>
     <hint type="destinationlabel">
      <x>374</x>
@@ -176,11 +346,11 @@
    <slot>scroll_speed_change(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>299</x>
-     <y>269</y>
+     <x>300</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
-     <x>419</x>
+     <x>404</x>
      <y>237</y>
     </hint>
    </hints>
@@ -192,12 +362,108 @@
    <slot>adaptive_scroll(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>306</x>
-     <y>242</y>
+     <x>126</x>
+     <y>161</y>
     </hint>
     <hint type="destinationlabel">
-     <x>425</x>
+     <x>404</x>
      <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spin_width</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>new_width(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>148</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spin_width_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>new_position(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>new_adaptive_factor(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>178</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>256</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>small_height_clicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>medium_height_clicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>268</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>426</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_3</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>large_height_clicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>344</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>119</x>
+     <y>440</y>
     </hint>
    </hints>
   </connection>
@@ -207,5 +473,11 @@
   <slot>hide_application()</slot>
   <slot>scroll_speed_change(int)</slot>
   <slot>adaptive_scroll(bool)</slot>
+  <slot>new_width(int)</slot>
+  <slot>new_position(int)</slot>
+  <slot>new_adaptive_factor(int)</slot>
+  <slot>small_height_clicked(bool)</slot>
+  <slot>medium_height_clicked(bool)</slot>
+  <slot>large_height_clicked(bool)</slot>
  </slots>
 </ui>

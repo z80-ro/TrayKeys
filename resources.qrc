@@ -1,17 +1,30 @@
 <RCC>
     <qresource prefix="/">
-        <file>header.png</file>
-        <file>key_on_keyboard.png</file>
-        <file>keylarge_on_keyboard.png</file>
-        <file>icon_active.png</file>
-        <file>icon_stopped.png</file>
-        <file>key_down.png</file>
-        <file>key_left.png</file>
-        <file>key_right.png</file>
-        <file>key_up.png</file>
-        <file>mouse_back.png</file>
-        <file>wheel_up.png</file>
-        <file>wheel_down.png</file>
-        <file>special_background.png</file>
+        <file>images/header.png</file>
+        <file>images/icon_active.png</file>
+        <file>images/icon_stopped.png</file>
+        <file>images/key_arrows_gimp.xcf</file>
+        <file>images/key_down.png</file>
+        <file>images/key_down_medium.png</file>
+        <file>images/key_down_small.png</file>
+        <file>images/key_left.png</file>
+        <file>images/key_left_medium.png</file>
+        <file>images/key_left_small.png</file>
+        <file>images/key_on_keyboard.png</file>
+        <file>images/key_on_keyboard_medium.png</file>
+        <file>images/key_on_keyboard_small.png</file>
+        <file>images/key_right.png</file>
+        <file>images/key_right_medium.png</file>
+        <file>images/key_right_small.png</file>
+        <file>images/key_up.png</file>
+        <file>images/key_up_medium.png</file>
+        <file>images/key_up_small.png</file>
+        <file>images/keylarge_on_keyboard.png</file>
+        <file>images/keylarge_on_keyboard_medium.png</file>
+        <file>images/keylarge_on_keyboard_small.png</file>
+        <file>images/mouse_back.png</file>
+        <file>images/special_background.png</file>
+        <file>images/wheel_down.png</file>
+        <file>images/wheel_up.png</file>
     </qresource>
 </RCC>
