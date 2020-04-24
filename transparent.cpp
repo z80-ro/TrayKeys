@@ -73,6 +73,7 @@ void transparent::set_height_suffix(QString s, int radio) {
         on_screen_height = 82;
         break;
     case 2:
+    default:
         on_screen_height = 92;
         break;
     }
@@ -131,6 +132,7 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
             queue[qi].width = 60;
             break;
         case 2:
+        default:
             queue[qi].width = 70;
             break;
         }
@@ -144,6 +146,7 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
                     queue[qi].width = 142;
                     break;
                 case 2:
+                default:
                     queue[qi].width = 173;
                     break;
                 }
@@ -231,6 +234,7 @@ void transparent::display_special_keys(int pos, QPainter *p, QPen pen, int i) {
         posy = 58;
         break;
     case 2:
+    default:
         posy = 68;
         break;
     }
@@ -350,6 +354,7 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
                                 p.drawText(pos+12, 28, queue[i].s);
                                 break;
                             case 2:
+                            default:
                                 p.setFont(fontlarge2);
                                 p.drawText(pos+16, 32, queue[i].s);
                                 break;
@@ -367,6 +372,7 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
                                     p.drawText(pos+10, 21, queue[i].s);
                                     break;
                                 case 2:
+                                default:
                                     p.setFont(fontmed2);
                                     p.drawText(pos+10, 25, queue[i].s);
                                     break;
@@ -383,6 +389,7 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
                             p.setFont(fontsmall1);
                             break;
                         case 2:
+                        default:
                             p.setFont(fontsmall2);
                             break;
                         }

@@ -88,14 +88,14 @@ void MainWindow::new_adaptive_factor(int f) {
     //qDebug("New factor: %d", f);
 }
 
-void MainWindow::small_height_clicked(bool v) {
+void MainWindow::small_height_clicked(bool) {
     display.set_height_suffix("_small", 0);
 }
 
-void MainWindow::medium_height_clicked(bool v) {
+void MainWindow::medium_height_clicked(bool) {
     display.set_height_suffix("_medium", 1);
 }
 
-void MainWindow::large_height_clicked(bool v) {
+void MainWindow::large_height_clicked(bool) {
     display.set_height_suffix("", 2);
 }
