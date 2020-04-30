@@ -112,7 +112,7 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
     // Handle only the key-presses for the remaining keys
     if (value == 1 && start_capturing) {
 
-        //qDebug("Received %s", s);
+        qDebug("Received %s", s);
 
         if (qi > 0 && queue[0].width == 0) {
             for (i=0; i<MAX_QUEUE_ITEMS-1; i++) queue[i] = queue[i+1];
@@ -142,7 +142,7 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
             if (    !(
                     (!strncmp(s, "LEFT", 4) && strlen(s) == 4)  ||
                     (!strncmp(s, "RIGHT", 5) && strlen(s) == 5) ||
-                    (!strncmp(s, "UP", 2) && strlen(s) == 2)    ||
+                    (!strncmp(s, "UPP", 3) && strlen(s) == 3)    ||
                     (!strncmp(s, "DOWN", 4) && strlen(s) == 4) )
                 ) {
 
@@ -337,7 +337,7 @@ void transparent::paintEvent(QPaintEvent* /* event */) {
                         } else if (!strncmp(queue[i].s, "RIGHT", 5) && strlen(queue[i].s) == 5) {
                             is_arrow = true;
                             p.drawImage(pos, 2, QImage(":/images/key_right"+height_suffix+".png"));
-                        } else if (!strncmp(queue[i].s, "UP", 2) && strlen(queue[i].s) == 2) {
+                        } else if (!strncmp(queue[i].s, "UPP", 3) && strlen(queue[i].s) == 3) {
                             is_arrow = true;
                             p.drawImage(pos, 2, QImage(":/images/key_up"+height_suffix+".png"));
                         } else if (!strncmp(queue[i].s, "DOWN", 4) && strlen(queue[i].s) == 4) {
