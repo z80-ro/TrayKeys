@@ -73,6 +73,11 @@ void MainWindow::adaptive_scroll(bool value) {
     display.adaptive_speed(value);
 }
 
+void MainWindow::reverse_scroll(bool value) {
+    //qDebug("Adaptive value : %d", value);
+    display_mouse.reverse_scroll(value);
+}
+
 void MainWindow::new_width(int w) {
     display.set_width(w);
     //qDebug("New width: %d", w);

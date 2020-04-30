@@ -30,6 +30,7 @@ transparent_mouse::transparent_mouse(QWidget *parent) : QWidget(parent) {
     start_capturing = true;
     reposition = false;
     start_fading = false;
+    display_reverse_scroll = false;
 
     buttons_state.state_left = false;
     buttons_state.state_middle = false;
@@ -52,6 +53,10 @@ transparent_mouse::transparent_mouse(QWidget *parent) : QWidget(parent) {
 
     special_keys_state = 0;
 
+}
+
+void transparent_mouse::reverse_scroll(bool value) {
+    display_reverse_scroll = value;
 }
 
 void transparent_mouse::return_special_keys(quint32 sks) {
@@ -194,11 +199,19 @@ void transparent_mouse::paintEvent(QPaintEvent* /* event */) {
     }
 
     if (blip_state.wheel_up) {
-        p.drawPixmap(19, 36, 11, 13, wheel_up);
+        if (display_reverse_scroll) {
+            p.drawPixmap(19, 48, 11, 13, wheel_down);
+        } else {
+            p.drawPixmap(19, 36, 11, 13, wheel_up);
+        }
     }
 
     if (blip_state.wheel_down) {
-        p.drawPixmap(19, 48, 11, 13, wheel_down);
+        if (display_reverse_scroll) {
+            p.drawPixmap(19, 36, 11, 13, wheel_up);
+        } else {
+            p.drawPixmap(19, 48, 11, 13, wheel_down);
+        }
     }
 
     fontsmall.setBold(true);

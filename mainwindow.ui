@@ -80,7 +80,7 @@
     <widget class="QSpinBox" name="spinBox">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>200</x>
        <y>110</y>
        <width>45</width>
        <height>26</height>
@@ -102,7 +102,7 @@
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>200</x>
        <y>90</y>
        <width>131</width>
        <height>17</height>
@@ -110,6 +110,19 @@
      </property>
      <property name="text">
       <string>Adaptive factor</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>120</y>
+       <width>161</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Reverse scroll arrows</string>
      </property>
     </widget>
    </widget>
@@ -467,6 +480,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reverse_scroll(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>quit_application()</slot>
@@ -479,5 +508,6 @@
   <slot>small_height_clicked(bool)</slot>
   <slot>medium_height_clicked(bool)</slot>
   <slot>large_height_clicked(bool)</slot>
+  <slot>reverse_scroll(bool)</slot>
  </slots>
 </ui>

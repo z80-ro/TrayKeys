@@ -39,6 +39,7 @@ private slots:
         void small_height_clicked(bool);
         void medium_height_clicked(bool);
         void large_height_clicked(bool);
+        void reverse_scroll(bool);
 
 public:
     explicit MainWindow(QWidget *parent = 0);

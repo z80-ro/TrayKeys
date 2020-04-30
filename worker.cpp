@@ -33,6 +33,7 @@ void worker::run() {
                     if (e[0].type == 1 && e[0].code < 0x300) {
 
                         code = e[0].code;
+                        //qDebug("code: %x", e[0].code);
 
                         // Process helper keys first
                         if (code == 29 || code == 97) {

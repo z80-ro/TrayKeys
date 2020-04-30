@@ -52,6 +52,8 @@ class transparent_mouse : public QWidget {
     bool start_fading;
     qreal opacity;
 
+    bool display_reverse_scroll;
+
 
 private slots:
     void return_read(quint32 value, QPoint position);
@@ -66,6 +68,7 @@ protected:
 
 public:
     explicit transparent_mouse(QWidget *parent = nullptr);
+    void reverse_scroll(bool);
 
     mouse_state buttons_state;
     mouse_state blip_state;
