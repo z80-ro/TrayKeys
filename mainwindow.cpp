@@ -74,7 +74,7 @@ void MainWindow::adaptive_scroll(bool value) {
 }
 
 void MainWindow::reverse_scroll(bool value) {
-    //qDebug("Adaptive value : %d", value);
+    //qDebug("Reverse scroll value : %d", value);
     display_mouse.reverse_scroll(value);
 }
 

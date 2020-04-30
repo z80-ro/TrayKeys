@@ -112,7 +112,7 @@ void transparent::return_read(const char *s, quint32 value, quint32 special_keys
     // Handle only the key-presses for the remaining keys
     if (value == 1 && start_capturing) {
 
-        qDebug("Received %s", s);
+        //qDebug("Received %s", s);
 
         if (qi > 0 && queue[0].width == 0) {
             for (i=0; i<MAX_QUEUE_ITEMS-1; i++) queue[i] = queue[i+1];

@@ -328,7 +328,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>277</x>
-     <y>430</y>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>348</x>
@@ -344,7 +344,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>330</x>
-     <y>430</y>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>374</x>
@@ -360,7 +360,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>300</x>
-     <y>114</y>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
      <x>404</x>
@@ -376,7 +376,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>126</x>
-     <y>161</y>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
      <x>404</x>
@@ -481,14 +481,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox</sender>
+   <sender>checkBox_2</sender>
    <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>reverse_scroll(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>96</x>
-     <y>153</y>
+     <x>130</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>

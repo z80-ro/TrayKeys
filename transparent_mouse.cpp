@@ -57,6 +57,7 @@ transparent_mouse::transparent_mouse(QWidget *parent) : QWidget(parent) {
 
 void transparent_mouse::reverse_scroll(bool value) {
     display_reverse_scroll = value;
+    //qDebug("Reverse scroll is now %d", value);
 }
 
 void transparent_mouse::return_special_keys(quint32 sks) {
