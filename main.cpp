@@ -15,11 +15,10 @@ int main(int argc, char *argv[]) {
     QIcon icon;
     QMenu menu;
     QAction *a1, *a2;
-    QActionGroup *startstopgroup, *eventgroup, *mouseeventgroup;
-    QString tmpresult;
+    QActionGroup *startstopgroup, *startstopgroupkeyboard, *eventgroup, *mouseeventgroup;
 
     MainWindow w;
-    icon.addFile(":/images/icon_active.png");
+    icon.addFile(":/images/icon_km_active.png");
 
     // Find out what the keyboard devices are
     QString cmd1 = "/bin/sh -c \"grep -B6 120013 /proc/bus/input/devices\"";
@@ -45,8 +44,6 @@ int main(int argc, char *argv[]) {
     }
 
     const QString menu_properties = "Properties";
-    const QString menu_start = "Start capturing";
-    const QString menu_stop = "Stop capturing";
     const QString menu_quit = "Quit";
 
     // Add the keyboard event selector
@@ -60,7 +57,22 @@ int main(int argc, char *argv[]) {
         } else a1->setChecked(false);
         eventgroup->addAction(a1);
     }
+
+    // Add the start/stop actions
+    const QString menu_start_keyboard = "Start capturing keyboard";
+    const QString menu_stop_keyboard = "Stop capturing keyboard";
+    startstopgroupkeyboard = new QActionGroup(0);
+    a1 = menu.addAction(menu_start_keyboard);
+    a1->setCheckable(true);
+    a1->setChecked(true);
+    startstopgroupkeyboard->addAction(a1);
+    a1 = menu.addAction(menu_stop_keyboard);
+    a1->setCheckable(true);
+    a1->setChecked(false);
+    startstopgroupkeyboard->addAction(a1);
     menu.addSeparator();
+
+    //menu.addSeparator();
 
     // Add the mouse event selector
     mouseeventgroup = new QActionGroup(0);
@@ -73,9 +85,11 @@ int main(int argc, char *argv[]) {
         } else a2->setChecked(false);
         mouseeventgroup->addAction(a2);
     }
-    menu.addSeparator();
+    //menu.addSeparator();
 
     // Add the start/stop actions
+    const QString menu_start = "Start capturing mouse";
+    const QString menu_stop = "Stop capturing mouse";
     startstopgroup = new QActionGroup(0);
     a1 = menu.addAction(menu_start);
     a1->setCheckable(true);
@@ -85,6 +99,7 @@ int main(int argc, char *argv[]) {
     a1->setCheckable(true);
     a1->setChecked(false);
     startstopgroup->addAction(a1);
+
     menu.addSeparator();
 
     menu.addAction(menu_properties);

@@ -23,15 +23,17 @@ void MainWindow::event_triggered(QAction *action)
 {
     if (action->text() == "Quit") quit_application();
     if (action->text() == "Properties") this->show();
-    if (action->text() == "Start capturing") {
+    if (action->text() == "Start capturing keyboard") {
         display.start_capturing = true;
-        display_mouse.start_capturing = true;
-        systrayicon->setIcon(QIcon(":/images/icon_active.png"));
     }
-    if (action->text() == "Stop capturing") {
+    if (action->text() == "Stop capturing keyboard") {
         display.start_capturing = false;
+    }
+    if (action->text() == "Start capturing mouse") {
+        display_mouse.start_capturing = true;
+    }
+    if (action->text() == "Stop capturing mouse") {
         display_mouse.start_capturing = false;
-        systrayicon->setIcon(QIcon(":/images/icon_stopped.png"));
     }
     if (action->text().contains("(keyboard)")) {
         qDebug() << "New keyboard device: " << action->text();
@@ -42,6 +44,16 @@ void MainWindow::event_triggered(QAction *action)
         qDebug() << "New mouse device: " << action->text();
         tmouse.set_device(action->text().split(char('-')).at(0).trimmed());
         tmouse.restart_capture();
+    }
+
+    if (display.start_capturing && display_mouse.start_capturing) {
+        systrayicon->setIcon(QIcon(":/images/icon_km_active.png"));
+    } else if (display.start_capturing && !display_mouse.start_capturing) {
+        systrayicon->setIcon(QIcon(":/images/icon_k_active.png"));
+    } else if (!display.start_capturing && display_mouse.start_capturing) {
+        systrayicon->setIcon(QIcon(":/images/icon_m_active.png"));
+    } else {
+        systrayicon->setIcon(QIcon(":/images/icon_stopped.png"));
     }
 }
 
